@@ -100,7 +100,7 @@ steps:
       python3 .github/workflows/scripts/goal_scheduler.py
 
 source: githubnext/goal
-engine: copilot
+engine: claude
 ---
 
 # Goal
