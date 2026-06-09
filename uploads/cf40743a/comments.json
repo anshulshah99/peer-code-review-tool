@@ -1,0 +1,45 @@
+[
+  {
+    "id": "3fb1c1eb",
+    "file": "code",
+    "line": 5,
+    "author": "Alice",
+    "body": "Consider adding a docstring here explaining the return value.",
+    "created_at": "2026-06-09 11:25"
+  },
+  {
+    "id": "6138db04",
+    "file": "spec",
+    "line": 7,
+    "author": "Bob",
+    "body": "The acceptance criteria for Easy mode is unclear \u2014 does the range include both endpoints?",
+    "created_at": "2026-06-09 11:25"
+  },
+  {
+    "id": "e5f639fe",
+    "file": "code",
+    "line": 10,
+    "parent_id": null,
+    "author": "Carol",
+    "body": "What happens if the player enters a float?",
+    "created_at": "2026-06-09 11:37"
+  },
+  {
+    "id": "ee5f302d",
+    "file": "code",
+    "line": 10,
+    "parent_id": "e5f639fe",
+    "author": "Jane Smith",
+    "body": "Good catch \u2014 int() already handles that, floats like 3.0 will raise ValueError.",
+    "created_at": "2026-06-09 11:37"
+  },
+  {
+    "id": "163d54f8",
+    "file": "project",
+    "line": 0,
+    "parent_id": null,
+    "author": "Bob",
+    "body": "Overall solid structure. The difficulty levels are well-calibrated. Main thing missing is the win rate edge case when played=0.",
+    "created_at": "2026-06-09 11:37"
+  }
+]

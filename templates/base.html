@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Peer Review Tool{% endblock %}</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
+      color: #1a1a2e;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: #2c3e50;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      height: 56px;
+    }
+    nav a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      opacity: 0.85;
+      transition: opacity 0.15s;
+    }
+    nav a:first-child { font-weight: 700; font-size: 1.05rem; opacity: 1; }
+    nav a:hover { opacity: 1; }
+
+    .container {
+      max-width: 860px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    h1 { font-size: 1.75rem; margin-bottom: 0.4rem; }
+    h2 { font-size: 1.3rem; margin-bottom: 1rem; color: #34495e; }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .error {
+      background: #fdecea;
+      color: #c0392b;
+      border-left: 4px solid #e74c3c;
+      padding: 0.8rem 1.2rem;
+      border-radius: 4px;
+      margin-bottom: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    label { display: block; font-weight: 600; margin-bottom: 0.35rem; font-size: 0.9rem; color: #555; }
+
+    input[type="text"], input[type="file"] {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1.5px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      margin-bottom: 1.1rem;
+      background: #fafafa;
+      transition: border-color 0.15s;
+    }
+    input[type="text"]:focus, input[type="file"]:focus {
+      outline: none;
+      border-color: #3498db;
+      background: #fff;
+    }
+
+    button[type="submit"] {
+      background: #2980b9;
+      color: #fff;
+      border: none;
+      padding: 0.7rem 1.8rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    button[type="submit"]:hover { background: #1f6391; }
+
+    .hint { font-size: 0.8rem; color: #888; margin-top: -0.8rem; margin-bottom: 1rem; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+    th { font-weight: 700; color: #555; background: #f9f9f9; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f0f6ff; }
+
+    a.action { color: #2980b9; text-decoration: none; font-weight: 600; }
+    a.action:hover { text-decoration: underline; }
+
+    .empty { color: #aaa; text-align: center; padding: 2rem; }
+
+    /* view page */
+    .meta { font-size: 0.85rem; color: #777; margin-bottom: 1.5rem; }
+    .tabs { display: flex; gap: 0; margin-bottom: 0; }
+    .tab-btn {
+      padding: 0.6rem 1.4rem;
+      border: 1.5px solid #ddd;
+      background: #f5f7fa;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #555;
+      border-radius: 6px 6px 0 0;
+      border-bottom: none;
+      transition: background 0.15s;
+    }
+    .tab-btn.active { background: #fff; color: #2980b9; border-color: #ddd; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .spec-body {
+      border: 1.5px solid #ddd;
+      border-radius: 0 6px 6px 6px;
+      padding: 1.5rem 2rem;
+      background: #fff;
+      line-height: 1.7;
+    }
+    .spec-body h1, .spec-body h2, .spec-body h3 { margin: 1rem 0 0.5rem; }
+    .spec-body p { margin-bottom: 0.8rem; }
+    .spec-body ul, .spec-body ol { margin-left: 1.5rem; margin-bottom: 0.8rem; }
+    .spec-body code { background: #f0f0f0; padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.88em; }
+    .spec-body pre { background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1rem; }
+    .spec-body pre code { background: none; padding: 0; }
+
+    pre.code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 0 6px 6px 6px;
+      padding: 1.5rem;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      white-space: pre;
+      border: 1.5px solid #313244;
+    }
+
+    .download-link { font-size: 0.85rem; color: #7f8c8d; }
+    .download-link a { color: #2980b9; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{{ url_for('index') }}">Peer Review Tool</a>
+    <a href="{{ url_for('index') }}">Submit</a>
+    <a href="{{ url_for('submissions') }}">All Submissions</a>
+  </nav>
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector('[data-tab="' + tabId + '"]').classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
+</body>
+</html>

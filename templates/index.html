@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Submit — Peer Review Tool{% endblock %}
+
+{% block content %}
+<style>
+.mode-toggle {
+  display: inline-flex;
+  border: 1.5px solid #d0d7de;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.65rem;
+}
+.mode-btn {
+  padding: 5px 14px;
+  background: #f6f8fa;
+  border: none;
+  border-right: 1.5px solid #d0d7de;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #656d76;
+  transition: background 0.1s, color 0.1s;
+}
+.mode-btn:last-child { border-right: none; }
+.mode-btn.active { background: #fff; color: #1f2328; font-weight: 600; }
+
+textarea.paste-area {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: #fafafa;
+  resize: vertical;
+  transition: border-color 0.15s;
+  margin-bottom: 0.3rem;
+}
+textarea.paste-area:focus { outline: none; border-color: #3498db; background: #fff; }
+textarea.code-area { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+</style>
+
+<h1>Submit Your Project</h1>
+<p style="color:#666; margin-bottom:1.5rem;">Provide your project specification and code for peer review.</p>
+
+<div class="card">
+  {% if error %}
+  <div class="error">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST" action="{{ url_for('submit') }}" enctype="multipart/form-data">
+    <label for="name">Your Name</label>
+    <input type="text" id="name" name="name" placeholder="e.g. Jane Smith" required />
+
+    {# ── Specification field ── #}
+    <label>Project Specification</label>
+    <div class="mode-toggle">
+      <button type="button" class="mode-btn active"
+              onclick="setMode('spec','upload',this)">Upload .md file</button>
+      <button type="button" class="mode-btn"
+              onclick="setMode('spec','paste',this)">Type / paste</button>
+    </div>
+
+    <div id="spec-upload">
+      <input type="file" id="spec-file" name="spec" accept=".md" />
+      <p class="hint">A Markdown file describing your project requirements and design.</p>
+    </div>
+    <div id="spec-paste" style="display:none">
+      <textarea class="paste-area" name="spec_text" rows="10"
+                placeholder="# My Project&#10;&#10;## Requirements&#10;&#10;Type or paste your Markdown specification here…"></textarea>
+      <p class="hint">Write in Markdown — headings, bullet points, and code blocks are all supported.</p>
+    </div>
+
+    {# ── Code field ── #}
+    <label style="margin-top:0.5rem">Project Code</label>
+    <div class="mode-toggle">
+      <button type="button" class="mode-btn active"
+              onclick="setMode('code','upload',this)">Upload .py file</button>
+      <button type="button" class="mode-btn"
+              onclick="setMode('code','paste',this)">Type / paste</button>
+    </div>
+
+    <div id="code-upload">
+      <input type="file" id="code-file" name="code" accept=".py" />
+      <p class="hint">Your Python implementation of the project.</p>
+    </div>
+    <div id="code-paste" style="display:none">
+      <textarea class="paste-area code-area" name="code_text" rows="14"
+                placeholder="# Paste your Python code here…"></textarea>
+      <p class="hint">Plain Python — no syntax highlighting needed here, it will be shown properly on the review page.</p>
+    </div>
+
+    <button type="submit" style="margin-top:0.5rem">Submit Project</button>
+  </form>
+</div>
+
+<script>
+function setMode(field, mode, btn) {
+  btn.parentElement.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(`${field}-upload`).style.display = mode === 'upload' ? '' : 'none';
+  document.getElementById(`${field}-paste`).style.display  = mode === 'paste'  ? '' : 'none';
+}
+</script>
+{% endblock %}

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "cf40743a",
+    "name": "Jane Smith",
+    "spec_file": "test_spec.md",
+    "code_file": "test_code.py",
+    "submitted_at": "2026-06-09 11:13"
+  },
+  {
+    "id": "451315ff",
+    "name": "Anshul Shah",
+    "spec_file": "spec.md",
+    "code_file": "game.py",
+    "submitted_at": "2026-06-09 11:16"
+  },
+  {
+    "id": "19a8d377",
+    "name": "Test Student",
+    "spec_file": "spec.md",
+    "code_file": "game.py",
+    "submitted_at": "2026-06-09 11:31"
+  },
+  {
+    "id": "7909a9a5",
+    "name": "Alice Paste",
+    "spec_file": "spec.md",
+    "code_file": "code.py",
+    "submitted_at": "2026-06-09 11:41"
+  },
+  {
+    "id": "0d8802cc",
+    "name": "Bob Mixed",
+    "spec_file": "spec.md",
+    "code_file": "code.py",
+    "submitted_at": "2026-06-09 11:41"
+  }
+]

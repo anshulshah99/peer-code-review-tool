@@ -1,0 +1,1 @@
+def main():\n    print('hello')\n\nif __name__ == '__main__':\n    main()
